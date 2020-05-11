@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Letters conversion</title>
+</head>
+<body style="background:  rgb(20, 30, 40);">
+	<div style="text-align:center;">
+		<div style="width: 600px; height: 60px; border: solid;border-color: rgb(0, 170, 255); margin: auto;">	
+			<p>Press "Enter" to convert from English to Arabic letters and vice versa!</p>
+		</div>
+
+		<p id="pIN">INPUT : AR</p>
+		<textarea id="in"></textarea>
+		<p id="pOUT">OUTPUT : EN</p>
+		<textarea id="out"></textarea>
+		<hr>
+		
+		<div style="width: 70px; height: 60px; border: solid; border-radius: 50px; border-color: rgb(0, 170, 255); margin: auto; position: relative; left: 270px;">	
+			<p style="text-align: center;">YSSH</p>
+		</div>
+
+		<button style="width: 70px; height: 60px; border: solid; border-radius: 50px; border-color: rgb(0, 170, 255); margin: auto; position: relative; right: 270px; top: -60px; font-weight: bold;" onclick="sw()">	SWITCH</button>
+		
+		<button id="conv" onclick="conv()" style="display: none;">Convert</button>
+	</div>
+</body>
+
+<style type="text/css">
+	textarea{
+		width: 600px;
+		height: 150px;
+		font-family: Arial;
+		font-size: 16px;
+	}
+	p{
+		color: white;
+		font-style: italic;
+		font-weight: bold;
+		font-size: 20px;
+		text-align: center;
+	}
+</style>
+
+<script type="text/javascript">
+	const english = ["`","1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=",
+					"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\",
+					"a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'",
+					"z", "x", "c", "v", "b", "n", "m", ",", ".", "/", " ",
+					
+					"~","!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+",
+					"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "|",
+					"A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"",
+					"Z", "X", "C", "V", "B", "N", "M", "<", ">", "?", " ", "\n", "\t"]
+
+	const arabic = ["ذ","1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=",
+					"ض", "ص", "ث", "ق", "ف", "غ", "ع", "ه", "خ", "ح", "ج", "د", "\\",
+					"ش", "س", "ي", "ب", "ل", "ا", "ت", "ن", "م", "ك", "ط",
+					"ئ", "ء", "ؤ", "ر", "ﻻ", "ى", "ة", "و", "ز", "ظ", " ",
+
+					"ّ","!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+",
+					"َ", "ً", "ُ", "ٌ", "ﻹ", "إ", "`", "÷", "×", "؛", "<", ">", "|",
+					"ِ", "ٍ", "]", "[", "ﻷ", "أ", "ـ", "،", "/", ":", "\"",
+					"~", "ْ", "}", "{", "ﻵ", "آ", "'", ",", ".", "؟", " ", "\n", "\t"]
+
+	var swFlag = 0;
+	function sw(){
+		swFlag ^= 1;
+		if (swFlag == 0){
+			document.getElementById("pIN").innerHTML = "INPUT : AR";
+			document.getElementById("pOUT").innerHTML = "OUTPUT : EN";
+		}
+		else{
+			document.getElementById("pIN").innerHTML = "INPUT : EN";
+			document.getElementById("pOUT").innerHTML = "OUTPUT : AR";
+		}
+	}
+	function conv() {
+		// body...
+		var str = document.getElementById("in").value;
+		var tmp = [];
+		if (swFlag == 0){
+			for (var i = 0; i < str.length; i++){
+				if(arabic.includes(str[i]))
+					tmp[i] = english[arabic.indexOf(str[i])];
+				else
+					tmp[i] = arabic[english.indexOf(str[i])];
+			}
+		}
+		else{
+			for (var i = 0; i < str.length; i++){
+				if(english.includes(str[i]))
+					tmp[i] = arabic[english.indexOf(str[i])];
+				else
+					tmp[i] = english[arabic.indexOf(str[i])];
+			}
+		}
+		document.getElementById("out").innerHTML = tmp.join("");
+	}
+	var input = document.getElementById("in");
+	input.addEventListener("keyup", function(event) {
+	  if (event.keyCode === 13) {
+	   event.preventDefault();
+	   document.getElementById("conv").click();
+	  }
+	});
+
+</script>
+</html>
